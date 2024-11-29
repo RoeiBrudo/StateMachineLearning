@@ -1,0 +1,181 @@
+    parser.add_option('-f', '--function',
+                      dest='function',
+                      type='choice',
+                      choices=['generate_data', 'learn', 'test', 'generate_test'],
+                      help='main function to execute')
+
+    parser.add_option('-m', dest='m', type='int', help='m')
+    parser.add_option('-p', dest='p', type='int', help='max_p')
+    parser.add_option('-r', dest='r', type='int', help='r')
+    parser.add_option('-n', dest='n', type='int', help='n')
+    parser.add_option('-k', dest='k', type='int', help='k')
+
+    parser.add_option('--input_unlabeled',
+                      dest='input_unlabeled',
+                      help='unlabeled data',
+                      default=None)
+
+    parser.add_option('--input_labeled',
+                      dest='input_labeled',
+                      help='labeled data',
+                      default=None)
+
+    parser.add_option('-o', '--output_folder',
+                      dest='output_folder',
+                      help='destination folder for results',
+                      default=None)
+
+    parser.add_option('--regression_type',
+                      dest='regression_type',
+                      help='regression type',
+                      default=None)
+
+    parser.add_option('--start_method',
+                      dest='start_method',
+                      type='choice',
+                      choices=['from_dir', 'from_ranges', 'init_from_data'],
+                      help='start method')
+
+    parser.add_option('--number_of_starts',
+                      dest='number_of_starts',
+                      type='int',
+                      help='number of starts points for hmm')
+
+    # from dir
+    parser.add_option('--start_dir',
+                      dest='start_dir',
+                      help='start parameters dir',
+                      default=None)
+
+    parser.add_option('--coef_noise',
+                      dest='coef_noise',
+                      type='float',
+                      help='coefficient noise from ',
+                      default=None)
+
+    parser.add_option('--transitions_noise',
+                      dest='transitions_noise',
+                      type='float',
+                      help='prob (alpha and start) noise in transition matrix')
+
+    # from ranges
+
+    parser.add_option('--range_of_n_states',
+                      dest='range_of_n_states',
+                      type='int',
+                      nargs=2,
+                      help='range of n_states values')
+
+    parser.add_option('--range_of_p',
+                      dest='range_of_p',
+                      type='int',
+                      nargs=2,
+                      help='range of p values')
+
+    parser.add_option('--range_of_coeff',
+                      dest='range_of_coeff',
+                      type='float',
+                      nargs=2,
+                      help='range of regression coefficients')
+
+    parser.add_option('--transitions_alpha',
+                      dest='transitions_alpha',
+                      type='float',
+                      help='max of alpha in transition matrix')
+
+
+
+Examples of commands - 
+
+
+
+## generate data 
+
+-f generate_data 
+-m 2 
+-p 1 
+-r 3 
+-n 100 
+-k 10 
+-o 2_variables
+
+
+
+## from dir of reference model
+
+-f learn
+--input_unlabeled 2_variables\data\data.csv
+--model_folder 2_variables\from_dir_1
+--start_method from_dir 
+--number_of_starts 3
+--start_dir 2_variables\true_model
+--coef_noise 0.5
+
+
+## from ranges
+
+-f learn
+--input_unlabeled 2_variables\data\data.csv
+--model_folder 2_variables\from_ranges_1
+--start_method from_ranges 
+--number_of_starts 3
+--start_dir trial\true_model
+--range_of_n_states 3 3
+--range_of_p 1 1
+--range_of_coeff -3 3
+--transitions_alpha 0.2
+
+
+## generate and test
+# from real model
+
+-f generate_test 
+-m 2 
+-p 1 
+-r 3 
+-n 100 
+-k 10 
+-o 2_variables
+--start_method from_dir 
+--number_of_starts 3
+--coef_noise 0.5
+
+
+
+## generate and test
+# from ranges
+
+-f generate_test 
+-m 2 
+-p 1 
+-r 3 
+-n 100 
+-k 10 
+-o 2_variables
+--start_method from_ranges 
+--number_of_starts 3
+--range_of_n_states 3 3
+--range_of_p 1 1
+--range_of_coeff -3 3
+--transitions_alpha 0.2
+
+
+## generate and test
+# from ranges
+
+-f generate_test 
+-m 3 
+-p 1 
+-r 3 
+-n 100 
+-k 10 
+-o 3_variables
+--start_method from_ranges 
+--number_of_starts 3
+--range_of_n_states 3 3
+--range_of_p 1 1
+--range_of_coeff -3 3
+--transitions_alpha 0.2
+
+
+
